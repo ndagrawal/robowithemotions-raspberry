@@ -19,7 +19,7 @@ INSERT INTO openwoz_robot_events VALUES ("glowled","some_robot","glowled","somer
 
 CREATE TABLE openwoz_robots (robot_key VARCHAR(255) PRIMARY KEY, robot_name VARCHAR(255), channel_name VARCHAR(255),image_path VARCHAR(255), purpose VARCHAR(255), platform VARCHAR(255));
 
-CREATE TABLE openwoz_robot_events (event_key VARCHAR(255), robot_key VARCHAR(255), event_name VARCHAR(255),class_name VARCHAR(255), method_name VARCHAR(255),PRIMARY KEY (event_key,robot_key),FOREIGN KEY (robot_key) REFERENCES openwoz_robots(robot_key))";  
+CREATE TABLE openwoz_robot_events (event_key VARCHAR(255), robot_key VARCHAR(255), event_name VARCHAR(255),class_name VARCHAR(255), method_name VARCHAR(255),PRIMARY KEY (event_key,robot_key),FOREIGN KEY (robot_key) REFERENCES openwoz_robots(robot_key));  
 
 
 INSERT INTO openwoz_robots VALUES ("vyo_robot","Vyo Robot", "vyo_robot","imgs/vyo.jpg","A social robot designed to manage your smart 
@@ -27,7 +27,7 @@ home.","Raspberry Pi"),("some_robot","Some Robot","some_robot","imgs/some_robot.
 
 INSERT INTO openwoz_robot_events VALUES ("headnod","vyo_robot","headnod","vyo.events.HeadNodEvent","nodHead"),("glowled","vyo_robot","glowled","vyo.events.BlinkLedEvent","blinkLed");
 
-
+--------------
 //var sql = "CREATE TABLE openwoz_robots (robot_key VARCHAR(255) PRIMARY KEY, robot_name VARCHAR(255), channel_name VARCHAR(255),image_path VARCHAR(255), purpose VARCHAR(255), platform VARCHAR(255))";  
 
 //"CREATE TABLE openwoz_robot_events (event_key VARCHAR(255), robot_key VARCHAR(255), event_name VARCHAR(255),class_name VARCHAR(255), method_name VARCHAR(255),PRIMARY KEY (event_key,robot_key),FOREIGN KEY (robot_key) REFERENCES openwoz_robots(robot_key))";  

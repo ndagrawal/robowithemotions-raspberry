@@ -3,22 +3,22 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
-  database: "openwoz_db"
+  //password: "root",
+  //database: "openwoz_db"
 });
 
-
-/*con.connect(function(err) {
+/*
+con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
   con.query("CREATE DATABASE openwoz_db", function (err, result) {
     if (err) throw err;
     console.log("Database created");
   });
-  con.query("Select * from openwoz_robots",function(err,result){
+  /*con.query("Select * from openwoz_robots",function(err,result){
 	if(err)throw err;  	
 	console.log(result);
-  });
+  });*/
 });*/
 
 con.connect(function(err) {

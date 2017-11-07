@@ -34,7 +34,7 @@ var redisChannels = {};
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  //password: "root",
   database: "openwoz_db"
 });
 
@@ -134,11 +134,13 @@ app.get('/robots/:profile_name/:event_name', function(req, res){
 	var event = req.params.event_name;
 	//console.log("Value: " + req.body.newVal);
 	//var new_value = parseFloat(req.body.newVal);
-
+	var result = [];
 	var message = result_ds.robot_profiles[profile].events[event];
+	message["time"] = 0;
+	result.push(message);
 	//message.value = new_value;
-	console.log("Sending redis channel: " + redisChannels[profile] + " message:" + JSON.stringify(message));
-	publisher.publish(redisChannels[profile], JSON.stringify(message));
+	console.log("Sending redis channel: " + redisChannels[profile] + " message:" + JSON.stringify(result));
+	publisher.publish(redisChannels[profile], JSON.stringify(result));
 	
 	//res.render("profile", {profile: robo_profiles_ds.robot_profiles[profile], msg: "Event successfully triggered!"});
 	res.json({msg:"Event successfully triggered!"});
@@ -164,18 +166,27 @@ app.get('/sendevent', function(req, res){
 
 app.post('/sequences/:profile_key',function(req,res){
 	//console.log(req.params.profile_key);
-	//console.log(req.body);
+	console.log(req.body);
 	var dict = req.body;
 	var result = {};
 	var profile = req.params.profile_key;
 	var result = [];
-	Object.keys(dict).forEach(function(key) {
-    	var event = result_ds.robot_profiles[profile].events[dict[key][0]];
+	for(var key in dict){
+		console.log(result_ds.robot_profiles[profile].events[dict[key][0]] +
+			" "+dict[key][1]);
+		var eventDict = result_ds.robot_profiles[profile].events[dict[key][0]];
+		var event = {};
+		for(var eventDictKey in eventDict){
+			event[eventDictKey] = eventDict[eventDictKey];
+		}
     	event["time"] = dict[key][1];
     	result.push(event);
-	});
+	}
 	console.log("Sending redis channel: " + redisChannels[profile] + " message:" + JSON.stringify(result));
 	publisher.publish(redisChannels[profile],JSON.stringify(result));
+	res.json({msg:"Sequence successfully triggered!"});
+	//res.json({msg:"Event successfully triggered!"});
+	//res.render("profile", {profile: result_ds.robot_profiles[req.params.profile_name]});
 });
 
 /*app.get('/test', routes.index);
